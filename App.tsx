@@ -3,13 +3,13 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
-  Text,
   useColorScheme,
 } from 'react-native';
 
 import ClockIcon from './src/components/icons/ClockIcon';
 import DataCard from './src/components/DataCard';
 import Divider from './src/components/layout/Divider';
+import { MainText } from './src/components/StyledText';
 import React from 'react';
 import Row from './src/components/layout/Row';
 import ScoreCard from './src/components/ScoreCard';
@@ -23,12 +23,14 @@ const App = () => {
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={styles.container}>
-        <Text style={styles.title}>Most Useful App Ever</Text>
+        <MainText style={styles.title}>Most Useful App Ever</MainText>
         <Divider height={24} />
         <Row>
           <ClockIcon />
           <Divider width={10} />
-          <Text style={styles.subtitle}>Total tracked time</Text>
+          <MainText fontWeight="SemiBold" style={styles.subtitle}>
+            Total tracked time
+          </MainText>
         </Row>
         <Divider height={16} />
         <Row>
@@ -57,12 +59,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   title: {
-    fontWeight: '700',
     fontSize: 20,
     lineHeight: 32,
   },
   subtitle: {
-    fontWeight: '600',
     fontSize: 16,
     lineHeight: 24,
   },

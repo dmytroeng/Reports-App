@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { MainText, SansText } from './StyledText';
+import { StyleSheet, View } from 'react-native';
 
 import Divider from './layout/Divider';
 import React from 'react';
@@ -16,9 +17,11 @@ const ScoreCard: React.FC<Props> = ({
 }) => {
   return (
     <View style={[styles.container, { backgroundColor: bgColor }]}>
-      <Text style={styles.title}>{title}</Text>
+      <MainText fontWeight="SemiBold" style={styles.title}>
+        {title}
+      </MainText>
       <Divider height={4} />
-      <Text style={styles.subtitle}>{subtitle}</Text>
+      <SansText style={styles.subtitle}>{subtitle}</SansText>
     </View>
   );
 };
@@ -31,12 +34,10 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   title: {
-    fontWeight: '600',
     fontSize: 20,
     lineHeight: 24,
   },
   subtitle: {
-    fontWeight: '400',
     fontSize: 13,
     lineHeight: 16,
     color: '#727580',

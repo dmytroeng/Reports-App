@@ -1,4 +1,5 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { MainText, SansText } from './StyledText';
+import { Pressable, StyleSheet, View } from 'react-native';
 
 import Divider from './layout/Divider';
 import HeartIcon from './icons/HeartIcon';
@@ -15,14 +16,14 @@ const DataCard: React.FC<Props> = ({ onButtonPress }) => {
       <HeartIcon />
       <Divider width={10} />
       <View>
-        <Text style={styles.title}>Want more data?</Text>
+        <MainText style={styles.title}>Want more data?</MainText>
         <Divider height={8} />
-        <Text style={styles.subtitle}>
+        <SansText style={styles.subtitle}>
           Press this button to add 1,000 blocks!
-        </Text>
+        </SansText>
         <Divider height={16} />
         <Pressable style={styles.button} onPress={onButtonPress}>
-          <Text style={styles.buttonText}>Do it!</Text>
+          <MainText style={styles.buttonText}>Do it!</MainText>
         </Pressable>
       </View>
     </Row>
@@ -36,12 +37,10 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   title: {
-    fontWeight: '700',
     fontSize: 16,
     lineHeight: 24,
   },
   subtitle: {
-    fontWeight: '400',
     fontSize: 13,
     lineHeight: 16,
     color: '#727580',
@@ -54,7 +53,6 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
   },
   buttonText: {
-    fontWeight: '700',
     fontSize: 14,
     lineHeight: 24,
   },
