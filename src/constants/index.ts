@@ -1,3 +1,4 @@
+export const PADDING = 20;
 export const INTERVAL = 6;
 
 // in minutes

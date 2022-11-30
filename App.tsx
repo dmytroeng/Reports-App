@@ -1,23 +1,26 @@
 import {
   BREAK_LENGTH_MAX,
   INTERVAL,
+  PADDING,
   QUARTER_HOURS,
   TOTAL_RANGE,
 } from './src/constants';
-import React, { useState } from 'react';
 import {
+  LogBox,
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   useColorScheme,
 } from 'react-native';
+import React, { useState } from 'react';
 import {
   generateRandomDate,
   generateRandomMs,
 } from './src/helpers/dateHelpers';
 
 import { Block } from './src/types';
+import Chart from './src/components/chart';
 import ClockIcon from './src/components/icons/ClockIcon';
 import DataCard from './src/components/DataCard';
 import Divider from './src/components/layout/Divider';
@@ -25,6 +28,8 @@ import { MainText } from './src/components/StyledText';
 import Row from './src/components/layout/Row';
 import ScoreCard from './src/components/ScoreCard';
 import { sub } from 'date-fns';
+
+LogBox.ignoreLogs(['Require cycle: node_modules/victory']);
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -62,6 +67,8 @@ const App = () => {
           </MainText>
         </Row>
         <Divider height={16} />
+        <Chart />
+        <Divider height={16} />
         <Row>
           <ScoreCard title={'200h'} subtitle="Today" />
           <Divider width={16} />
@@ -85,7 +92,7 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingTop: 32,
-    paddingHorizontal: 20,
+    paddingHorizontal: PADDING,
   },
   title: {
     fontSize: 20,

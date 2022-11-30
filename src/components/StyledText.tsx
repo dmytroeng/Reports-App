@@ -2,12 +2,15 @@ import { Text, TextProps } from 'react-native';
 
 import React from 'react';
 
+export type MainTextFontWeight = 'SemiBold' | 'Bold';
+export type SansTextFontWeight = 'Regular' | 'Bold';
+
 interface MainTextProps extends Omit<TextProps, 'fontWeight'> {
-  fontWeight?: 'SemiBold' | 'Bold';
+  fontWeight?: MainTextFontWeight;
 }
 
 interface SansTextProps extends Omit<TextProps, 'fontWeight'> {
-  fontWeight?: 'Regular' | 'Bold';
+  fontWeight?: SansTextFontWeight;
 }
 
 export const MainText: React.FC<MainTextProps> = ({
@@ -16,7 +19,7 @@ export const MainText: React.FC<MainTextProps> = ({
 }) => (
   <Text
     {...props}
-    style={[{ fontFamily: `Sora-${fontWeight}` }, props.style]}
+    style={[props.style, { fontFamily: `Sora-${fontWeight}` }]}
   />
 );
 
@@ -26,6 +29,6 @@ export const SansText: React.FC<SansTextProps> = ({
 }) => (
   <Text
     {...props}
-    style={[{ fontFamily: `DMSans-${fontWeight}` }, props.style]}
+    style={[props.style, { fontFamily: `DMSans-${fontWeight}` }]}
   />
 );
