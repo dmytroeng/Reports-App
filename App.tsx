@@ -1,21 +1,50 @@
 import {
+  BREAK_LENGTH_MAX,
+  INTERVAL,
+  QUARTER_HOURS,
+  TOTAL_RANGE,
+} from './src/constants';
+import React, { useState } from 'react';
+import {
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   useColorScheme,
 } from 'react-native';
+import {
+  generateRandomDate,
+  generateRandomMs,
+} from './src/helpers/dateHelpers';
 
+import { Block } from './src/types';
 import ClockIcon from './src/components/icons/ClockIcon';
 import DataCard from './src/components/DataCard';
 import Divider from './src/components/layout/Divider';
 import { MainText } from './src/components/StyledText';
-import React from 'react';
 import Row from './src/components/layout/Row';
 import ScoreCard from './src/components/ScoreCard';
+import { sub } from 'date-fns';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
+
+  const [data, setData] = useState<Block>();
+
+  const getNewData = () => {
+    const today = new Date();
+
+    const start = generateRandomDate(sub(today, { months: INTERVAL }), today);
+    const total = generateRandomMs(
+      TOTAL_RANGE.min,
+      TOTAL_RANGE.min,
+      QUARTER_HOURS,
+    );
+    const breakLength = generateRandomMs(0, BREAK_LENGTH_MAX);
+    const end = new Date(total + start.getTime() + breakLength);
+
+    setData({ start, breakLength, end, createdAt: today });
+  };
 
   return (
     <SafeAreaView style={styles.backgroundStyle}>
@@ -43,7 +72,7 @@ const App = () => {
           />
         </Row>
         <Divider height={16} />
-        <DataCard />
+        <DataCard onButtonPress={getNewData} />
       </ScrollView>
     </SafeAreaView>
   );
