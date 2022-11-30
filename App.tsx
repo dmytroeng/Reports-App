@@ -1,6 +1,7 @@
 import {
   BREAK_LENGTH_MAX,
   INTERVAL,
+  ITERATIONS_NUM,
   PADDING,
   QUARTER_HOURS,
   TOTAL_RANGE,
@@ -13,13 +14,15 @@ import {
   StyleSheet,
   useColorScheme,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
+import { Report, ReportsDictionary } from './src/types';
+import { format, intervalToDuration, isSameDay, sub } from 'date-fns';
 import {
   generateRandomDate,
   generateRandomMs,
 } from './src/helpers/dateHelpers';
+import { getSortedReports, getTotal, groupBy, today } from './src/helpers';
 
-import { Block } from './src/types';
 import Chart from './src/components/chart';
 import ClockIcon from './src/components/icons/ClockIcon';
 import DataCard from './src/components/DataCard';
@@ -27,29 +30,65 @@ import Divider from './src/components/layout/Divider';
 import { MainText } from './src/components/StyledText';
 import Row from './src/components/layout/Row';
 import ScoreCard from './src/components/ScoreCard';
-import { sub } from 'date-fns';
 
 LogBox.ignoreLogs(['Require cycle: node_modules/victory']);
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
-  const [data, setData] = useState<Block>();
+  const [data, setData] = useState<ReportsDictionary>();
 
   const getNewData = () => {
-    const today = new Date();
+    const newData: Report[] = [];
 
-    const start = generateRandomDate(sub(today, { months: INTERVAL }), today);
-    const total = generateRandomMs(
-      TOTAL_RANGE.min,
-      TOTAL_RANGE.min,
-      QUARTER_HOURS,
-    );
-    const breakLength = generateRandomMs(0, BREAK_LENGTH_MAX);
-    const end = new Date(total + start.getTime() + breakLength);
+    for (let i = 0; i < ITERATIONS_NUM; i++) {
+      const start = generateRandomDate(
+        sub(today, { months: INTERVAL - 1 }),
+        today,
+      );
+      const total = generateRandomMs(
+        TOTAL_RANGE.min,
+        TOTAL_RANGE.min,
+        QUARTER_HOURS,
+      );
+      const breakLength = generateRandomMs(0, BREAK_LENGTH_MAX);
+      const end = new Date(total + start.getTime() + breakLength);
+      const month = format(start, 'MMM');
 
-    setData({ start, breakLength, end, createdAt: today });
+      newData.push({ start, breakLength, end, createdAt: today, month });
+    }
+
+    const sortedData = getSortedReports(newData);
+    const groupedData = groupBy(sortedData, i => i.month);
+
+    setData(groupedData);
   };
+
+  const totalForToday = useMemo(() => {
+    if (!data) {
+      return '200h';
+    }
+
+    const dataForCurrMonth = data[format(today, 'MMM')];
+    const idx = dataForCurrMonth.findIndex(report =>
+      isSameDay(report.start, today),
+    );
+
+    if (idx === -1) {
+      return '0h';
+    }
+
+    const total = [...dataForCurrMonth]
+      .slice(idx)
+      .reduce((accum, curr) => accum + getTotal(curr), 0);
+
+    const { hours, minutes } = intervalToDuration({
+      start: 0,
+      end: total,
+    });
+
+    return `${hours}h ${minutes}m`;
+  }, [data]);
 
   return (
     <SafeAreaView style={styles.backgroundStyle}>
@@ -67,10 +106,10 @@ const App = () => {
           </MainText>
         </Row>
         <Divider height={16} />
-        <Chart />
+        <Chart reports={data} />
         <Divider height={16} />
         <Row>
-          <ScoreCard title={'200h'} subtitle="Today" />
+          <ScoreCard title={totalForToday} subtitle="Today" />
           <Divider width={16} />
           <ScoreCard
             title={'120h 30m'}

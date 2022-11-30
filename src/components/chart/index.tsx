@@ -1,5 +1,6 @@
 import CustomTick, { AxisEnum } from './CustomTick';
 import { INTERVAL, PADDING } from '../../constants';
+import React, { useMemo } from 'react';
 import {
   VictoryAxis,
   VictoryChart,
@@ -8,8 +9,9 @@ import {
   VictoryTheme,
 } from 'victory-native';
 import { format, sub } from 'date-fns';
+import { getTotal, today } from '../../helpers';
 
-import React from 'react';
+import { ReportsDictionary } from '../../types';
 import { useWindowDimensions } from 'react-native';
 
 const CHART_HEIGHT = 150;
@@ -20,11 +22,33 @@ const DATA = [
   { x: 5, y: 200 },
 ];
 
-const Chart = () => {
+interface Props {
+  reports?: ReportsDictionary;
+}
+
+const Chart: React.FC<Props> = ({ reports }) => {
   const { width } = useWindowDimensions();
 
   const horizontalTickValues = [...Array(INTERVAL)].map((_, idx) =>
-    format(sub(new Date(), { months: INTERVAL - idx - 1 }), 'MMM'),
+    format(sub(today, { months: INTERVAL - idx - 1 }), 'MMM'),
+  );
+
+  const formattedData = useMemo(
+    () =>
+      reports
+        ? Object.keys(reports).map(month => {
+            const y = reports[month].reduce(
+              (accum, curr) => accum + getTotal(curr),
+              0,
+            );
+
+            return {
+              x: month,
+              y,
+            };
+          })
+        : DATA,
+    [reports],
   );
 
   return (
@@ -70,11 +94,11 @@ const Chart = () => {
         }}
       />
 
-      <VictoryLine interpolation="cardinal" data={DATA} />
+      <VictoryLine interpolation="cardinal" data={formattedData} />
       <VictoryScatter
         style={{ data: { fill: '#fff', stroke: '#000', strokeWidth: 2 } }}
         size={4}
-        data={[DATA[0], DATA[DATA.length - 1]]}
+        data={[formattedData[0], formattedData[formattedData.length - 1]]}
       />
     </VictoryChart>
   );
