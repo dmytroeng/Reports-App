@@ -16,12 +16,12 @@ import {
 } from 'react-native';
 import React, { useMemo, useState } from 'react';
 import { Report, ReportsDictionary } from './src/types';
-import { format, intervalToDuration, isSameDay, sub } from 'date-fns';
+import { format, isAfter, isBefore, isSameDay, sub } from 'date-fns';
 import {
   generateRandomDate,
   generateRandomMs,
 } from './src/helpers/dateHelpers';
-import { getSortedReports, getTotal, groupBy, today } from './src/helpers';
+import { getSortedReports, getTotalFrom, groupBy, today } from './src/helpers';
 
 import Chart from './src/components/chart';
 import ClockIcon from './src/components/icons/ClockIcon';
@@ -64,31 +64,37 @@ const App = () => {
     setData(groupedData);
   };
 
+  const dataForCurrMonth = data?.[format(today, 'MMM')];
+
   const totalForToday = useMemo(() => {
-    if (!data) {
+    if (!dataForCurrMonth) {
       return '200h';
     }
 
-    const dataForCurrMonth = data[format(today, 'MMM')];
-    const idx = dataForCurrMonth.findIndex(report =>
+    const idx = dataForCurrMonth?.findIndex(report =>
       isSameDay(report.start, today),
     );
 
-    if (idx === -1) {
-      return '0h';
+    return getTotalFrom(dataForCurrMonth, idx);
+  }, [dataForCurrMonth]);
+
+  const totalForWeek = useMemo(() => {
+    if (!dataForCurrMonth) {
+      return '120h 30m';
     }
 
-    const total = [...dataForCurrMonth]
-      .slice(idx)
-      .reduce((accum, curr) => accum + getTotal(curr), 0);
+    const start = sub(today, { weeks: 1 });
+    const idx = dataForCurrMonth?.findIndex((report, index) => {
+      const nextStart = dataForCurrMonth?.[index + 1]?.start;
 
-    const { hours, minutes } = intervalToDuration({
-      start: 0,
-      end: total,
+      return (
+        isBefore(report.start, start) &&
+        (isAfter(nextStart, start) || isSameDay(nextStart, start))
+      );
     });
 
-    return `${hours}h ${minutes}m`;
-  }, [data]);
+    return getTotalFrom(dataForCurrMonth, idx + 1);
+  }, [dataForCurrMonth]);
 
   return (
     <SafeAreaView style={styles.backgroundStyle}>
@@ -112,7 +118,7 @@ const App = () => {
           <ScoreCard title={totalForToday} subtitle="Today" />
           <Divider width={16} />
           <ScoreCard
-            title={'120h 30m'}
+            title={totalForWeek}
             subtitle="This week"
             bgColor="#EFFCFF"
           />
