@@ -4,11 +4,11 @@ React Native application implementing test assessment – https://www.figma.com/
 
 ## Screenshot
 
-Screenshot on iPhone 13: https://drive.google.com/file/d/1h9aHzSR97NfyXHXbtp7DmibJZ-qmN7X7/view?usp=share_link
+Screenshot on iPhone 13: https://drive.google.com/file/d/1XFQdhRf2yzXkzCIiC6u20XDWYltXlMSd/view?usp=share_link
 
 ## Screencast
 
-Screencast showcasing app on iPhone 13: https://drive.google.com/file/d/15rpIpwBq4UQpeuGzWl_5dn-1EqwOvsSU/view?usp=sharing
+Screencast showcasing app on iPhone 13: https://drive.google.com/file/d/16A2ldveFnXT3WCXD7bKDx6D_9KTVJ8CM/view?usp=share_link
 
 ## Run application locally
 
