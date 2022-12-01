@@ -64,7 +64,7 @@ const App = () => {
     setData(groupedData);
   };
 
-  const dataForCurrMonth = data?.[format(today, 'MMM')];
+  const dataForCurrMonth = useMemo(() => data?.[format(today, 'MMM')], [data]);
 
   const totalForToday = useMemo(() => {
     if (!dataForCurrMonth) {

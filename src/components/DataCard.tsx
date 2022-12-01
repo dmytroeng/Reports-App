@@ -15,7 +15,7 @@ const DataCard: React.FC<Props> = ({ onButtonPress }) => {
     <Row style={styles.container}>
       <HeartIcon />
       <Divider width={10} />
-      <View>
+      <View style={styles.textWrapper}>
         <MainText style={styles.title}>Want more data?</MainText>
         <Divider height={8} />
         <SansText style={styles.subtitle}>
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8F8F9',
     borderRadius: 16,
   },
+  textWrapper: { flexShrink: 1 },
   title: {
     fontSize: 16,
     lineHeight: 24,

@@ -1,7 +1,8 @@
-import CustomTick, { AxisEnum } from './CustomTick';
+import CustomTick, { TICK_STYLES } from './CustomTick';
 import { INTERVAL, PADDING } from '../../constants';
 import React, { useMemo } from 'react';
 import {
+  TextSize,
   VictoryAxis,
   VictoryChart,
   VictoryLine,
@@ -11,16 +12,12 @@ import {
 import { format, sub } from 'date-fns';
 import { getTotal, today } from '../../helpers';
 
+import { DATA } from '../../mocks';
 import { ReportsDictionary } from '../../types';
 import { useWindowDimensions } from 'react-native';
 
 const CHART_HEIGHT = 150;
-const DATA = [
-  { x: 2, y: 400 },
-  { x: 3, y: 200 },
-  { x: 4, y: 300 },
-  { x: 5, y: 200 },
-];
+const DEFAULT_OFFSET_LEFT = 20;
 
 interface Props {
   reports?: ReportsDictionary;
@@ -51,6 +48,13 @@ const Chart: React.FC<Props> = ({ reports }) => {
     [reports],
   );
 
+  const offsetLeft = useMemo(
+    () =>
+      TextSize.approximateTextSize(`${formattedData[0].y}h`, TICK_STYLES)
+        .width + DEFAULT_OFFSET_LEFT,
+    [formattedData],
+  );
+
   return (
     <VictoryChart
       theme={VictoryTheme.material}
@@ -59,13 +63,13 @@ const Chart: React.FC<Props> = ({ reports }) => {
       padding={{
         top: 10,
         right: 15,
-        left: 30,
+        left: offsetLeft,
         bottom: 25,
       }}
-      domainPadding={{ x: [20, 0], y: [10, 0] }}>
+      domainPadding={{ x: [offsetLeft, 0], y: [10, 10] }}>
       <VictoryAxis
         dependentAxis
-        tickLabelComponent={<CustomTick axis={AxisEnum.Y} />}
+        tickFormat={tick => `${tick}h`}
         style={{
           axis: {
             strokeWidth: 0,
@@ -73,6 +77,7 @@ const Chart: React.FC<Props> = ({ reports }) => {
           ticks: {
             stroke: 'none',
           },
+          tickLabels: { fontFamily: 'DMSans-Regular' },
           grid: {
             strokeDasharray: 3,
             stroke: '#E3E3E6',

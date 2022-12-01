@@ -3,8 +3,12 @@ import { SansText, SansTextFontWeight } from '../StyledText';
 import { TextSize, VictoryLabelProps } from 'victory';
 
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import { format } from 'date-fns';
+
+export const TICK_STYLES = {
+  fontFamily: 'DMSans-Regular',
+  fontSize: 13,
+};
 
 export enum AxisEnum {
   X = 'x',
@@ -44,7 +48,7 @@ const CustomTick: React.FC<Props> = ({ x, y, text, axis = AxisEnum.X }) => {
     axis,
     new Date(),
   );
-  const textSize = TextSize.approximateTextSize(tick, styles.tick);
+  const textSize = TextSize.approximateTextSize(tick, TICK_STYLES);
 
   if (!x || !y) {
     return null;
@@ -53,19 +57,12 @@ const CustomTick: React.FC<Props> = ({ x, y, text, axis = AxisEnum.X }) => {
   return (
     <G x={x - textSize?.width / 2} y={y - textSize?.height / 2}>
       <ForeignObject>
-        <SansText style={{ ...styles.tick, color }} fontWeight={fontWeight}>
+        <SansText style={{ ...TICK_STYLES, color }} fontWeight={fontWeight}>
           {tick}
         </SansText>
       </ForeignObject>
     </G>
   );
 };
-
-const styles = StyleSheet.create({
-  tick: {
-    fontFamily: 'DMSans-Regular',
-    fontSize: 13,
-  },
-});
 
 export default React.memo(CustomTick);
