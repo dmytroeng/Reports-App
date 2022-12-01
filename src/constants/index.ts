@@ -1,4 +1,5 @@
 export const ITERATIONS_NUM = 1000;
+export const MS_PER_HOUR = 3600000;
 export const PADDING = 20;
 export const INTERVAL = 6;
 
