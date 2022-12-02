@@ -10,28 +10,25 @@ export const TICK_STYLES = {
   fontSize: 13,
 };
 
-export enum AxisEnum {
-  X = 'x',
-  Y = 'y',
-}
+type Axis = 'x' | 'y';
 
 interface Props extends VictoryLabelProps {
-  axis?: AxisEnum;
+  axis?: Axis;
 }
 
 const getConfig = (
   tick: string,
-  axis: AxisEnum,
+  axis: Axis,
   today: Date,
 ): { tick: string; fontWeight: SansTextFontWeight; color?: string } => {
   switch (axis) {
-    case AxisEnum.Y:
+    case 'y':
       return {
         tick: `${tick}h`,
         fontWeight: 'Regular',
         color: '#727580',
       };
-    case AxisEnum.X: {
+    case 'x': {
       const isCurrMonth = format(today, 'MMM') === tick;
 
       return {
@@ -43,7 +40,7 @@ const getConfig = (
   }
 };
 
-const CustomTick: React.FC<Props> = ({ x, y, text, axis = AxisEnum.X }) => {
+const CustomTick: React.FC<Props> = ({ x, y, text, axis = 'x' }) => {
   const { tick, fontWeight, color } = getConfig(
     text as string,
     axis,

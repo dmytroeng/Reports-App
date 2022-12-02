@@ -4,6 +4,7 @@ import { useWindowDimensions } from 'react-native';
 import {
   VictoryAxis,
   VictoryChart,
+  VictoryLabel,
   VictoryLine,
   VictoryScatter,
   VictoryTheme,
@@ -16,7 +17,9 @@ import { ReportsDictionary } from '../../types';
 
 import CustomTick, { TICK_STYLES } from './CustomTick';
 
-const CHART_HEIGHT = 150;
+const CHART_HEIGHT = 160;
+const PADDING_LEFT = 50;
+const OFFSET_Y = 5;
 
 interface Props {
   reports?: ReportsDictionary;
@@ -54,13 +57,17 @@ const Chart: React.FC<Props> = ({ reports }) => {
       height={CHART_HEIGHT}
       padding={{
         top: 10,
-        right: 15,
-        left: 50,
+        right: 0,
+        left: 0,
         bottom: 25,
       }}
-      domainPadding={{ x: [10, 0], y: [10, 10] }}>
+      domainPadding={{ x: [PADDING_LEFT, 15], y: [3, 15] }}>
       <VictoryAxis
         dependentAxis
+        domain={reports ? [0, 60] : undefined}
+        tickLabelComponent={
+          <VictoryLabel dy={-8} dx={PADDING_LEFT - OFFSET_Y} />
+        }
         tickFormat={tick => `${tick}h`}
         style={{
           axis: {
@@ -69,7 +76,7 @@ const Chart: React.FC<Props> = ({ reports }) => {
           ticks: {
             stroke: 'none',
           },
-          tickLabels: TICK_STYLES,
+          tickLabels: { ...TICK_STYLES, fill: '#727580' },
           grid: {
             strokeDasharray: 3,
             stroke: '#E3E3E6',
@@ -91,7 +98,11 @@ const Chart: React.FC<Props> = ({ reports }) => {
         }}
       />
 
-      <VictoryLine interpolation="cardinal" data={formattedData} />
+      <VictoryLine
+        interpolation="cardinal"
+        data={formattedData}
+        style={{ data: { stroke: '#000', strokeWidth: 2 } }}
+      />
       <VictoryScatter
         style={{ data: { fill: '#fff', stroke: '#000', strokeWidth: 2 } }}
         size={4}
