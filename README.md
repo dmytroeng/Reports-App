@@ -12,7 +12,7 @@ Preview on iPhone 13 simulator:
 
 Screencast: 
 
-https://user-images.githubusercontent.com/119416183/205236085-79db0d2d-90b6-4010-aa29-34c8bf722e50.mp4
+https://user-images.githubusercontent.com/119416183/205322989-5d7ee908-cba5-42f9-a17c-b104319994bd.MP4
 
 ## Run application
 
