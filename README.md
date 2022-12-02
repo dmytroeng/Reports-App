@@ -8,7 +8,7 @@ It implements designs from [Figma](https://www.figma.com/file/ScfWUnCxS3s3QGdIld
 
 Preview on iPhone 13 simulator:
 
-<img src="https://i.imgur.com/qTAWPoD.png" data-canonical-src="https://gyazo.com/eb5c5741b6a9a16c692170a41a49c858.png" width="300" />
+<img src="https://user-images.githubusercontent.com/119416183/205281763-f99bb12a-2c78-4c7a-b337-e4ced5752165.png" width="300" />
 
 Screencast: 
 
