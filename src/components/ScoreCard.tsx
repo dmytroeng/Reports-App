@@ -1,8 +1,8 @@
-import { MainText, SansText } from './StyledText';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import Divider from './layout/Divider';
-import React from 'react';
+import { MainText, SansText } from './StyledText';
 
 interface Props {
   title: string;

@@ -1,6 +1,5 @@
-import { View, ViewStyle } from 'react-native';
-
 import React from 'react';
+import { View, ViewStyle } from 'react-native';
 
 interface Props extends ViewStyle {
   width?: number | string;

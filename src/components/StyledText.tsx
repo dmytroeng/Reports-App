@@ -1,6 +1,5 @@
-import { Text, TextProps } from 'react-native';
-
 import React from 'react';
+import { Text, TextProps } from 'react-native';
 
 export type MainTextFontWeight = 'SemiBold' | 'Bold';
 export type SansTextFontWeight = 'Regular' | 'Bold';

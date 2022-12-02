@@ -1,9 +1,9 @@
+import { format } from 'date-fns';
+import React from 'react';
 import { ForeignObject, G } from 'react-native-svg';
-import { SansText, SansTextFontWeight } from '../StyledText';
 import { TextSize, VictoryLabelProps } from 'victory';
 
-import React from 'react';
-import { format } from 'date-fns';
+import { SansText, SansTextFontWeight } from '../StyledText';
 
 export const TICK_STYLES = {
   fontFamily: 'DMSans-Regular',
@@ -31,7 +31,7 @@ const getConfig = (
         fontWeight: 'Regular',
         color: '#727580',
       };
-    case AxisEnum.X:
+    case AxisEnum.X: {
       const isCurrMonth = format(today, 'MMM') === tick;
 
       return {
@@ -39,6 +39,7 @@ const getConfig = (
         fontWeight: isCurrMonth ? 'Bold' : 'Regular',
         color: isCurrMonth ? '#000' : '#727580',
       };
+    }
   }
 };
 

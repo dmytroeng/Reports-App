@@ -1,11 +1,5 @@
-import {
-  BREAK_LENGTH_MAX,
-  INTERVAL,
-  ITERATIONS_NUM,
-  PADDING,
-  QUARTER_HOURS,
-  TOTAL_RANGE,
-} from './src/constants';
+import { format, isAfter, isBefore, isSameDay, sub } from 'date-fns';
+import React, { useMemo, useState } from 'react';
 import {
   LogBox,
   SafeAreaView,
@@ -14,22 +8,28 @@ import {
   StyleSheet,
   useColorScheme,
 } from 'react-native';
-import React, { useMemo, useState } from 'react';
-import { Report, ReportsDictionary } from './src/types';
-import { format, isAfter, isBefore, isSameDay, sub } from 'date-fns';
+
+import Chart from './src/components/chart';
+import DataCard from './src/components/DataCard';
+import ClockIcon from './src/components/icons/ClockIcon';
+import Divider from './src/components/layout/Divider';
+import Row from './src/components/layout/Row';
+import ScoreCard from './src/components/ScoreCard';
+import { MainText } from './src/components/StyledText';
+import {
+  BREAK_LENGTH_MAX,
+  INTERVAL,
+  ITERATIONS_NUM,
+  PADDING,
+  QUARTER_HOURS,
+  TOTAL_RANGE,
+} from './src/constants';
+import { getSortedReports, getTotalFrom, groupBy, today } from './src/helpers';
 import {
   generateRandomDate,
   generateRandomMs,
 } from './src/helpers/dateHelpers';
-import { getSortedReports, getTotalFrom, groupBy, today } from './src/helpers';
-
-import Chart from './src/components/chart';
-import ClockIcon from './src/components/icons/ClockIcon';
-import DataCard from './src/components/DataCard';
-import Divider from './src/components/layout/Divider';
-import { MainText } from './src/components/StyledText';
-import Row from './src/components/layout/Row';
-import ScoreCard from './src/components/ScoreCard';
+import { Report, ReportsDictionary } from './src/types';
 
 LogBox.ignoreLogs(['Require cycle: node_modules/victory']);
 

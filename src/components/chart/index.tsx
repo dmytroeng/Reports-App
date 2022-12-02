@@ -1,6 +1,6 @@
-import CustomTick, { TICK_STYLES } from './CustomTick';
-import { INTERVAL, MS_PER_HOUR, PADDING } from '../../constants';
+import { format, sub } from 'date-fns';
 import React, { useMemo } from 'react';
+import { useWindowDimensions } from 'react-native';
 import {
   VictoryAxis,
   VictoryChart,
@@ -8,12 +8,13 @@ import {
   VictoryScatter,
   VictoryTheme,
 } from 'victory-native';
-import { format, sub } from 'date-fns';
-import { getTotal, today } from '../../helpers';
 
+import { INTERVAL, MS_PER_HOUR, PADDING } from '../../constants';
+import { getTotal, today } from '../../helpers';
 import { DATA } from '../../mocks';
 import { ReportsDictionary } from '../../types';
-import { useWindowDimensions } from 'react-native';
+
+import CustomTick, { TICK_STYLES } from './CustomTick';
 
 const CHART_HEIGHT = 150;
 

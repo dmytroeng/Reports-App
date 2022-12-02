@@ -1,10 +1,10 @@
-import { MainText, SansText } from './StyledText';
+import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import Divider from './layout/Divider';
 import HeartIcon from './icons/HeartIcon';
-import React from 'react';
+import Divider from './layout/Divider';
 import Row from './layout/Row';
+import { MainText, SansText } from './StyledText';
 
 interface Props {
   onButtonPress?: () => void;
