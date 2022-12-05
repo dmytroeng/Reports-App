@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TextProps } from 'react-native';
+import { StyleSheet, Text, TextProps } from 'react-native';
 
 export type MainTextFontWeight = 'SemiBold' | 'Bold';
 export type SansTextFontWeight = 'Regular' | 'Bold';
@@ -18,7 +18,7 @@ export const MainText: React.FC<MainTextProps> = ({
 }) => (
   <Text
     {...props}
-    style={[props.style, { fontFamily: `Sora-${fontWeight}` }]}
+    style={[styles.text, props.style, { fontFamily: `Sora-${fontWeight}` }]}
   />
 );
 
@@ -28,6 +28,8 @@ export const SansText: React.FC<SansTextProps> = ({
 }) => (
   <Text
     {...props}
-    style={[props.style, { fontFamily: `DMSans-${fontWeight}` }]}
+    style={[styles.text, props.style, { fontFamily: `DMSans-${fontWeight}` }]}
   />
 );
+
+const styles = StyleSheet.create({ text: { color: '#000' } });
