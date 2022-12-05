@@ -10,9 +10,10 @@ Preview on iPhone 13 simulator:
 
 <img src="https://user-images.githubusercontent.com/119416183/205281763-f99bb12a-2c78-4c7a-b337-e4ced5752165.png" width="300" />
 
-Screencast: 
+Screencast:
 
-https://user-images.githubusercontent.com/119416183/205322989-5d7ee908-cba5-42f9-a17c-b104319994bd.MP4
+https://user-images.githubusercontent.com/119416183/205588559-df26800d-5bd7-4371-9a14-82e89c05ab56.mp4
+
 
 ## Run application
 
